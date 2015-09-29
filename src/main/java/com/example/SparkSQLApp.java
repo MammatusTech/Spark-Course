@@ -5,7 +5,6 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.DataFrame;
-import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SQLContext;
 
 import java.util.Arrays;
@@ -61,14 +60,16 @@ public class SparkSQLApp {
 
 
     public void querySQLData(SQLContext sqlContext) {
-
+        
         DataFrame result = sqlContext.sql("SELECT * from todo");
-        System.out.println("Queried Todo Items using SQL:\n");
-        for (Row row : result.collect()) {
-            System.out.println(row);
+
+        System.out.println("Show the DataFrame result:\n");
+        result.show();
+
+        System.out.println("Select the id column and show its contents:\n");
+        result.select("id").show();
 
 
-        }
     }
 
     public static void main( String args[] )
